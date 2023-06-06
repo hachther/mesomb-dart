@@ -74,7 +74,7 @@ class Application
     return this.security.containsKey(field) ? this.security[field] : null;
   }
   
-  int getBalance(String? country =null, String? service = null) 
+  int getBalance(String? country = null, String? service = null) 
   {
     List<dynamic> data = this.balances;
       if (country != null) {

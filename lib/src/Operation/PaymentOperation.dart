@@ -1,5 +1,7 @@
-
 import 'dart:convert';
+import 'package:PaymentMeSomb/src/Model/Customer.dart';
+import 'package:PaymentMeSomb/src/Model/Location.dart';
+import 'package:PaymentMeSomb/src/Model/Product.dart';
 import 'package:http/http.dart' as http;
 
 import '../Exception/InvalidClientRequestException.dart';
@@ -62,7 +64,7 @@ class PaymentOperation {
   }
 
   Future<TransactionResponse> makeDeposit(Map<String, dynamic> params) async {
-    String endpoint = 'payment/collect/';
+    String endpoint = 'payment/deposit/';
     String url = buildUrl(endpoint);
     DateTime date = params['date'] ?? DateTime.now();
     String nonce = params['nonce'];
@@ -74,6 +76,20 @@ class PaymentOperation {
       'country': params['country'] ?? 'CM',
       'currency': params['currency'] ?? 'XAF',
     };
+    if (params['location'] != null) {
+      body['location'] = params['location'];
+    }
+    if (params['customer'] != null) {
+      body['customer'] = params['customer'];
+    }
+    if (params['products'] != null) {
+      body['products'] = params['products'] is List
+          ? params['products']
+          : [params['products']];
+    }
+    if (params['extra'] != null) {
+      body['extra'] = params['extra'];
+    }
 
     String authorization = getAuthorization('POST', endpoint, date, nonce,
         {'content-type': 'application/json; charset=utf-8'}, body);
@@ -95,7 +111,62 @@ class PaymentOperation {
 
     print('Response status: ${response.statusCode}');
     print('Response body: ${response.body}');
-    if (response.statusCode >= 300) {
+    if (response.statusCode >= 400) {
+      processClientException(response.statusCode, response.body);
+    }
+
+    return TransactionResponse(jsonDecode(response.body));
+  }
+
+  Future<TransactionResponse> makeCollect(Map<String ,dynamic>params)async{
+    DateTime date = params['date']?? DateTime.now();
+    final String endpoint = 'payment/collect/';
+    final  url = buildUrl(endpoint);
+    String nonce = params['nonce'];
+
+    Map<String, dynamic> body = {
+      'amount':params ['amount'],
+      'service': params['service'],
+      'payer': params['payer'],
+      'country': params['country']?? 'CM',
+      'currency': params['currency']?? 'XAF',
+      'fees': params['feesIncluded']?? true,
+      'conversion': params['conversion']?? false,
+      'source': 'JS/v${MeSomb.VERSION}',
+    };
+    if (params['location'] != null) {
+      body['location'] = params['location'];
+    }
+    if (params['customer'] != null) {
+      body['customer'] = params['customer'];
+    }
+    if (params['products'] != null) {
+      body['products'] = params['products'] is List
+          ? params['products']
+          : [params['products']];
+    }
+    if (params['extra'] != null) {
+      body['extra'] = params['extra'];
+    }
+
+    final String authorization = getAuthorization(
+      'POST',endpoint,date,nonce,{'content-type': 'application/json'},body,);
+
+    
+    Map<String, String> headers = {
+      'x-mesomb-date': date.millisecondsSinceEpoch.toString(),
+      'x-mesomb-nonce': nonce,
+      'Authorization': authorization,
+      'Content-Type': 'application/json',
+      'X-MeSomb-Application': applicationKey,
+      'X-MeSomb-OperationMode': params['mode']?? 'synchronous',
+    };
+    if (params['trxID'] != null) {
+      headers['X-MeSomb-TrxID'] = params['trxID'];
+    }
+   var uri = Uri.parse(url);
+   var  response =await http.post(uri, body: jsonEncode(body), headers: headers);
+    if (response.statusCode >= 400) {
       processClientException(response.statusCode, response.body);
     }
 
