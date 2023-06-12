@@ -7,7 +7,7 @@ class Transaction {
   late String success;
   late String type;
   late double amount;
-  late int fees;
+  late double fees;
 // ignore: non_constant_identifier_names
   late String b_party;
   late String message;
@@ -17,7 +17,7 @@ class Transaction {
   late String country;
   late String currency;
 // ignore: non_constant_identifier_names
-  late Null fin_trx_id;
+  late String? fin_trx_id;
   late double? trxamount;
   late Location? location;
   late Customer? customer;

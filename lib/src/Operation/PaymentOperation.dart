@@ -1,7 +1,9 @@
 import 'dart:convert';
+import 'package:PaymentMeSomb/src/Model/Application.dart';
 import 'package:PaymentMeSomb/src/Model/Customer.dart';
 import 'package:PaymentMeSomb/src/Model/Location.dart';
 import 'package:PaymentMeSomb/src/Model/Product.dart';
+import 'package:PaymentMeSomb/src/Model/Transaction.dart';
 import 'package:http/http.dart' as http;
 
 import '../Exception/InvalidClientRequestException.dart';
@@ -73,8 +75,9 @@ class PaymentOperation {
       'amount': params['amount'],
       'service': params['service'],
       'receiver': params['receiver'],
-      'country': params['country'] ?? 'CM',
+      'country': params['country'] ?? 'CM', 
       'currency': params['currency'] ?? 'XAF',
+      'source': 'SDKDart/${MeSomb.VERSION}',
     };
     if (params['location'] != null) {
       body['location'] = params['location'];
@@ -118,21 +121,21 @@ class PaymentOperation {
     return TransactionResponse(jsonDecode(response.body));
   }
 
-  Future<TransactionResponse> makeCollect(Map<String ,dynamic>params)async{
-    DateTime date = params['date']?? DateTime.now();
+  Future<TransactionResponse> makeCollect(Map<String, dynamic> params) async {
     final String endpoint = 'payment/collect/';
-    final  url = buildUrl(endpoint);
+    final url = buildUrl(endpoint);
+    DateTime date = params['date'] ?? DateTime.now();
     String nonce = params['nonce'];
 
     Map<String, dynamic> body = {
-      'amount':params ['amount'],
+      'amount': params['amount'],
       'service': params['service'],
       'payer': params['payer'],
-      'country': params['country']?? 'CM',
-      'currency': params['currency']?? 'XAF',
-      'fees': params['feesIncluded']?? true,
-      'conversion': params['conversion']?? false,
-      'source': 'JS/v${MeSomb.VERSION}',
+      'country': params['country'] ?? 'CM',
+      'currency': params['currency'] ?? 'XAF',
+      'fees': params['feesIncluded'] ?? true,
+      'conversion': params['conversion'] ?? false,
+      'source': 'SDKDart/${MeSomb.VERSION}',
     };
     if (params['location'] != null) {
       body['location'] = params['location'];
@@ -149,27 +152,129 @@ class PaymentOperation {
       body['extra'] = params['extra'];
     }
 
-    final String authorization = getAuthorization(
-      'POST',endpoint,date,nonce,{'content-type': 'application/json'},body,);
+    String authorization = getAuthorization('POST', endpoint, date, nonce,
+        {'content-type': 'application/json; charset=utf-8'}, body);
 
-    
     Map<String, String> headers = {
-      'x-mesomb-date': date.millisecondsSinceEpoch.toString(),
+      'x-mesomb-date': (date.millisecondsSinceEpoch ~/ 1000).toInt().toString(),
       'x-mesomb-nonce': nonce,
       'Authorization': authorization,
       'Content-Type': 'application/json',
       'X-MeSomb-Application': applicationKey,
-      'X-MeSomb-OperationMode': params['mode']?? 'synchronous',
+      'X-MeSomb-OperationMode': params['mode'] ?? 'synchronous',
     };
     if (params['trxID'] != null) {
       headers['X-MeSomb-TrxID'] = params['trxID'];
     }
-   var uri = Uri.parse(url);
-   var  response =await http.post(uri, body: jsonEncode(body), headers: headers);
+    var uri = Uri.parse(url);
+    var response =
+        await http.post(uri, body: jsonEncode(body), headers: headers);
+    print('Response status: ${response.statusCode}');
+    print('Response body: ${response.body}');
     if (response.statusCode >= 400) {
       processClientException(response.statusCode, response.body);
     }
 
     return TransactionResponse(jsonDecode(response.body));
+  }
+
+  // Future<Application> updateSecurity(
+  //   String field,
+  //   String action ,
+  //   dynamic  value,
+  // ) async {
+  //   const endpoint = 'payment/security/';
+  //   final url = buildUrl(endpoint);
+  //   DateTime date = DateTime.now();
+
+  //   if (date == null) {
+  //     date = DateTime.now();
+  //   }
+
+  //   final body = <String, dynamic>{'field': field, 'action': action};
+
+  //   if (action != 'UNSET') {
+  //     body['value'] = value;
+  //   }
+
+  //   final authorization = getAuthorization(
+  //     'POST',
+  //     endpoint,
+  //     date,
+  //     '',
+  //     {'content-type': 'application/json; charset=utf-8'},
+  //     body,
+  //   );
+  //   var uri = Uri.parse(url);
+  //   final response = await http.post(
+  //     uri,
+  //     body: jsonEncode(body),
+  //     headers: {
+  //       'x-mesomb-date':(date.millisecondsSinceEpoch ~/ 1000).toInt().toString(),
+  //       'x-mesomb-nonce': '',
+  //       'Authorization': authorization,
+  //       'Content-Type': 'application/json',
+  //       'X-MeSomb-Application': applicationKey,
+  //     },
+  //   );
+  //   if (response.statusCode >= 400) {
+  //     processClientException(response.statusCode, response.body);
+  //   }
+
+  //   return Application(jsonDecode(response.body));
+  // }
+  Future<Application> getStatus(DateTime? date) async {
+    const endpoint = 'payment/status/';
+    final url = buildUrl(endpoint);
+
+    date ??= DateTime.now();
+
+    final authorization = getAuthorization('GET', endpoint, date, '', {}, null);
+    var uri = Uri.parse(url);
+    final response = await http.get(
+      (uri),
+      headers: {
+        'x-mesomb-date':
+            (date.millisecondsSinceEpoch ~/ 1000).toInt().toString(),
+        'x-mesomb-nonce': '',
+        'Authorization': authorization,
+        'X-MeSomb-Application': applicationKey,
+        // 'Content-Type': 'application/json',
+      },
+    );
+    print(response.statusCode);
+    print(response.body);
+
+    if (response.statusCode >= 400) {
+      processClientException(response.statusCode, response.body);
+    }
+
+    return Application(jsonDecode(response.body));
+  }
+
+  Future<List<Transaction>> getTransactions(
+    List<String> ids,
+    DateTime? date,
+  ) async {
+    final endpoint = 'payment/transactions/?ids=${ids.join(',')}';
+    final url = buildUrl(endpoint);
+    date ??= DateTime.now();
+    final authorization = getAuthorization('GET', endpoint, date, '', {}, null);
+    var uri = Uri.parse(url);
+    final response = await http.get(
+      (uri),
+      headers: {
+        'x-mesomb-date':
+            (date.millisecondsSinceEpoch ~/ 1000).toInt().toString(),
+        'x-mesomb-nonce': '',
+        'Authorization': authorization,
+        'X-MeSomb-Application': applicationKey,
+      },
+    );
+    if (response.statusCode >= 400) {
+      processClientException(response.statusCode, response.body);
+    }
+
+    return jsonDecode(response.body).map((d) => Transaction(d)).toList().cast<Transaction>();
   }
 }
