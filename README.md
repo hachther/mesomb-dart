@@ -1,39 +1,124 @@
-<!-- 
-This README describes the package. If you publish this package to pub.dev,
-this README's contents appear on the landing page for your package.
+<h1 style="text-align: center">Bienvenue sur dart-mesomb </h1>
+<p>
+<img alt="Version" src="<a href="https://img.shields.io/badge/version-1.0-blue.svg?cacheSeconds=2592000">https://img.shields.io/badge/version-1.0-blue.svg?cacheSeconds=2592000</a>" />
+<a href="<a href="https://mesomb.hachther.com/en/api/v1.1/schema/">https://mesomb.hachther.com/en/api/v1.1/schema/</a>" target="_blank">
+<img alt="Documentation" src="<a href="https://img.shields.io/badge/documentation-yes-brightgreen.svg">https://img.shields.io/badge/documentation-yes-brightgreen.svg</a>" />
+</a>
+<a href="#" target="_blank">
+<img alt="License: MIT" src="<a href="https://img.shields.io/badge/License-MIT-yellow.svg">https://img.shields.io/badge/License-MIT-yellow.svg</a>" />
+</a>
+<a href="<a href="https://twitter.com/hachther">https://twitter.com/hachther</a>" target="_blank">
+<img alt="Twitter: hachther" src="<a href="https://img.shields.io/twitter/follow/hachther.svg?style=social">https://img.shields.io/twitter/follow/hachther.svg?style=social</a>" />
+</a>
+</p>
 
-For information about how to write a good package README, see the guide for
-[writing package pages](https://dart.dev/guides/libraries/writing-package-pages). 
+> Client Dart pour le paiement mobile (Orange Money, Mobile Money ...) avec les services MeSomb.
+>
+> Vous pouvez consulter la <a href="https://mesomb.hachther.com/en/api/v1.1/schema/">documentation complète de l'api ici</a>
 
-For general information about developing packages, see the Dart guide for
-[creating packages](https://dart.dev/guides/libraries/create-library-packages)
-and the Flutter guide for
-[developing packages and plugins](https://flutter.dev/developing-packages). 
--->
+house
+ <a href="https://mesomb.com">Page d'accueil</a>
+Installer
+sh
+yarn add @hachther/mesomb
 
-TODO: Put a short description of the package here that helps potential users
-know whether this package might be useful for them.
+ou
+npm install @hachther/mesomb
 
-## Features
+Utilisation
+Consultez la documentation complète ici
 
-TODO: List what your package can do. Maybe include images, gifs, or videos.
+Voici quelques exemples rapides
 
-## Getting started
+Collecter de l'argent depuis un compte
+Importation ES6
 
-TODO: List prerequisites and provide or point to information on how to
-start using the package.
+Dart
+import 'package:mesomb/mesomb.dart';
 
-## Usage
+final payment = PaymentOperation(applicationKey: '<applicationKey>', accessKey: '<AccessKey>', secretKey: '<SecretKey>');
+final response = await payment.makeCollect(amount: 100, service: 'MTN', payer: '677550203', nonce: RandomGenerator.nonce());
+print(response.isOperationSuccess());
+print(response.isTransactionSuccess());
 
-TODO: Include short and useful examples for package users. Add longer examples
-to `/example` folder. 
+Inclusion modulaire
 
-```dart
-const like = 'sample';
-```
+Dart
+import 'package:mesomb/mesomb.dart' as mesomb;
 
-## Additional information
+final payment = mesomb.PaymentOperation(applicationKey: '<applicationKey>', accessKey: '<AccessKey>', secretKey: '<SecretKey>');
+final response = await payment.makeCollect(amount: 100, service: 'MTN', payer: '677550203', nonce: mesomb.RandomGenerator.nonce());
+print(response.isOperationSuccess());
+print(response.isTransactionSuccess());
 
-TODO: Tell users more about the package: where to find more information, how to 
-contribute to the package, how to file issues, what response they can expect 
-from the package authors, and more.
+Déposer de l'argent dans un compte
+Importation ES6
+
+Dart
+import 'package:mesomb/mesomb.dart';
+
+final payment = PaymentOperation(applicationKey: '<applicationKey>', accessKey: '<AccessKey>', secretKey: '<SecretKey>');
+final response = await payment.makeDeposit(amount: 100, service: 'MTN', receiver: '677550203', nonce: RandomGenerator.nonce());
+print(response.isOperationSuccess());
+print(response.isTransactionSuccess());
+
+Inclusion modulaire
+
+Dart
+import 'package:mesomb/mesomb.dart' as mesomb;
+
+final payment = mesomb.PaymentOperation(applicationKey: '<applicationKey>', accessKey: '<AccessKey>', secretKey: '<SecretKey>');
+final response = await payment.makeDeposit(amount: 100, service: 'MTN', receiver: '677550203', nonce: mesomb.RandomGenerator.nonce());
+print(response.isOperationSuccess());
+print(response.isTransactionSuccess());
+
+Obtenir le statut de l'application
+Importation ES6
+
+Dart
+import 'package:mesomb/mesomb.dart';
+
+final payment = PaymentOperation(applicationKey: '<applicationKey>', accessKey: '<AccessKey>', secretKey: '<SecretKey>');
+final application = await payment.getStatus();
+print(application);
+
+Inclusion modulaire
+
+Dart
+import 'package:mesomb/mesomb.dart' as mesomb;
+
+final payment = mesomb.PaymentOperation(applicationKey: '<applicationKey>', accessKey: '<AccessKey>', secretKey: '<SecretKey>');
+final application = await payment.getStatus();
+print(application);
+
+Obtenir les transactions par ID
+Importation ES6
+
+Dart
+import 'package:mesomb/mesomb.dart';
+
+final payment = PaymentOperation(applicationKey: '<applicationKey>', accessKey: '<AccessKey>', secretKey: '<SecretKey>');
+final transactions = await payment.getTransactions(['ID1', 'ID2']);
+print(transactions);
+
+Inclusion modulaire
+
+Dart
+import 'package:mesomb/mesomb.dart' as mesomb;
+
+final payment = mesomb.PaymentOperation(applicationKey: '<applicationKey>', accessKey: '<AccessKey>', secretKey: '<SecretKey>');
+final transactions = await payment.getTransactions(['ID1', 'ID2']);
+print(transactions);
+
+Auteur
+Hachther LLC <contact@hachther.com>
+
+⦁ 
+Site web : <a href="https://www.hachther.com">https://www.hachther.com</a>
+⦁ 
+Twitter : <a href="https://twitter.com/hachther">@hachther</a>
+⦁ 
+Github : <a href="https://github.com/hachther">@hachther</a>
+⦁ 
+LinkedIn : <a href="https://linkedin.com/in/hachther">@hachther</a>
+
