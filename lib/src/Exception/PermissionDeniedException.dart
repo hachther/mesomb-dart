@@ -1,8 +1,3 @@
-
-
-
-
-class PermissionDeniedException implements Exception{
+class PermissionDeniedException implements Exception {
   PermissionDeniedException(String message);
-
 }

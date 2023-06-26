@@ -1,14 +1,8 @@
-
-
-class InvalidClientRequestException implements Exception 
-{
- late String? code;
+class InvalidClientRequestException implements Exception {
+  late String? code;
   late String? message;
 
-  InvalidClientRequestException(String? message, String? code) {
-    this.message = message;
-    this.code = code;
-  }
+  InvalidClientRequestException(this.message, this.code);
 
   @override
   String toString() {

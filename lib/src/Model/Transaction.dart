@@ -8,6 +8,7 @@ class Transaction {
   late String type;
   late double amount;
   late double fees;
+
 // ignore: non_constant_identifier_names
   late String b_party;
   late String message;
@@ -16,6 +17,7 @@ class Transaction {
   late String ts;
   late String country;
   late String currency;
+
 // ignore: non_constant_identifier_names
   late String? fin_trx_id;
   late double? trxamount;

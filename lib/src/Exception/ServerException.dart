@@ -1,10 +1,8 @@
-
-
-class ServerException implements Exception{
+class ServerException implements Exception {
   late String? code;
   late String? message;
 
-  ServerException (String message, String? code) {
+  ServerException(String message, String? code) {
     this.message = message;
     this.code = code;
   }

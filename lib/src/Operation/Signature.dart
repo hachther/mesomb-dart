@@ -1,5 +1,5 @@
-
 import 'dart:convert';
+
 import 'package:crypto/crypto.dart';
 
 class Signature {
@@ -12,20 +12,21 @@ class Signature {
 
     var timestamp = (date.millisecondsSinceEpoch ~/ 1000).toInt();
 
-    if (headers == null) 
-    {
+    if (headers == null) {
       headers = {};
     }
-    headers['host'] = parse.scheme +'://' +parse.host +(parse.hasPort ? ':' + parse.port.toString() : '');
+    headers['host'] = parse.scheme +
+        '://' +
+        parse.host +
+        (parse.hasPort ? ':' + parse.port.toString() : '');
     headers['x-mesomb-date'] = timestamp.toString();
     headers['x-mesomb-nonce'] = nonce;
     var sortedKeys = headers.keys.toList()..sort();
     var canonicalHeaders =
         sortedKeys.map((k) => '${k.toLowerCase()}:${headers?[k]}').join('\n');
-        print(canonicalHeaders);
+    print(canonicalHeaders);
 
-    if (body == null) 
-    {
+    if (body == null) {
       body = {};
     }
     var bodyJson = jsonEncode(body);
@@ -39,8 +40,7 @@ class Signature {
     var canonicalRequest =
         '$method\n/$path\n$canonicalQuery\n$canonicalHeaders\n$signedHeaders\n$payloadHash';
 
-    var scope =
-        '${date.year}${date.month}${date.day}/$service/mesomb_request';
+    var scope = '${date.year}${date.month}${date.day}/$service/mesomb_request';
     var stringToSign =
         '$algorithm\n$timestamp\n$scope\n${sha1.convert(utf8.encode(canonicalRequest)).toString()}';
 

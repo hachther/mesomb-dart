@@ -1,8 +1,6 @@
 import 'dart:convert';
+
 import 'package:PaymentMeSomb/src/Model/Application.dart';
-import 'package:PaymentMeSomb/src/Model/Customer.dart';
-import 'package:PaymentMeSomb/src/Model/Location.dart';
-import 'package:PaymentMeSomb/src/Model/Product.dart';
 import 'package:PaymentMeSomb/src/Model/Transaction.dart';
 import 'package:http/http.dart' as http;
 
@@ -75,7 +73,7 @@ class PaymentOperation {
       'amount': params['amount'],
       'service': params['service'],
       'receiver': params['receiver'],
-      'country': params['country'] ?? 'CM', 
+      'country': params['country'] ?? 'CM',
       'currency': params['currency'] ?? 'XAF',
       'source': 'SDKDart/${MeSomb.VERSION}',
     };
@@ -275,6 +273,9 @@ class PaymentOperation {
       processClientException(response.statusCode, response.body);
     }
 
-    return jsonDecode(response.body).map((d) => Transaction(d)).toList().cast<Transaction>();
+    return jsonDecode(response.body)
+        .map((d) => Transaction(d))
+        .toList()
+        .cast<Transaction>();
   }
 }

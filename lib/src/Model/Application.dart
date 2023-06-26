@@ -1,5 +1,3 @@
-
-
 import 'package:PaymentMeSomb/src/Model/ApplicationBalance.dart';
 
 class Application {
@@ -17,8 +15,12 @@ class Application {
   Application(Map<String, dynamic> data)
       : key = data['key'],
         logo = data['logo'],
-        balances = data['balances'].map((d) => ApplicationBalance(d)).toList().cast<ApplicationBalance>(),
-        countries = data['countries'].map((country) => country).toList().cast<String>(),
+        balances = data['balances']
+            .map((d) => ApplicationBalance(d))
+            .toList()
+            .cast<ApplicationBalance>(),
+        countries =
+            data['countries'].map((country) => country).toList().cast<String>(),
         description = data['description'],
         is_live = data['is_live'],
         name = data['name'],

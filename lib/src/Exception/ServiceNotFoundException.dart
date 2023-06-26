@@ -1,7 +1,3 @@
-
-
-class ServiceNotFoundException implements Exception
-{
+class ServiceNotFoundException implements Exception {
   ServiceNotFoundException(String message);
-
 }

@@ -1,124 +1,211 @@
-<h1 style="text-align: center">Bienvenue sur dart-mesomb </h1>
+<h1 style="text-align: center">Welcome to dart-mesomb 👋</h1>
 <p>
-<img alt="Version" src="<a href="https://img.shields.io/badge/version-1.0-blue.svg?cacheSeconds=2592000">https://img.shields.io/badge/version-1.0-blue.svg?cacheSeconds=2592000</a>" />
-<a href="<a href="https://mesomb.hachther.com/en/api/v1.1/schema/">https://mesomb.hachther.com/en/api/v1.1/schema/</a>" target="_blank">
-<img alt="Documentation" src="<a href="https://img.shields.io/badge/documentation-yes-brightgreen.svg">https://img.shields.io/badge/documentation-yes-brightgreen.svg</a>" />
-</a>
-<a href="#" target="_blank">
-<img alt="License: MIT" src="<a href="https://img.shields.io/badge/License-MIT-yellow.svg">https://img.shields.io/badge/License-MIT-yellow.svg</a>" />
-</a>
-<a href="<a href="https://twitter.com/hachther">https://twitter.com/hachther</a>" target="_blank">
-<img alt="Twitter: hachther" src="<a href="https://img.shields.io/twitter/follow/hachther.svg?style=social">https://img.shields.io/twitter/follow/hachther.svg?style=social</a>" />
-</a>
+  <img alt="Version" src="https://img.shields.io/badge/version-1.0-blue.svg?cacheSeconds=2592000" />
+  <a href="https://mesomb.hachther.com/en/api/v1.1/schema/" target="_blank">
+    <img alt="Documentation" src="https://img.shields.io/badge/documentation-yes-brightgreen.svg" />
+  </a>
+  <a href="#" target="_blank">
+    <img alt="License: MIT" src="https://img.shields.io/badge/License-MIT-yellow.svg" />
+  </a>
+  <a href="https://twitter.com/hachther" target="_blank">
+    <img alt="Twitter: hachther" src="https://img.shields.io/twitter/follow/hachther.svg?style=social" />
+  </a>
 </p>
 
-> Client Dart pour le paiement mobile (Orange Money, Mobile Money ...) avec les services MeSomb.
+> dart client for mobile payment (Orange Money, Mobile Money ...) with MeSomb services.
 >
-> Vous pouvez consulter la <a href="https://mesomb.hachther.com/en/api/v1.1/schema/">documentation complète de l'api ici</a>
+> You can check the full [documentation of the api here](https://mesomb.hachther.com/en/api/v1.1/schema/)
 
-house
- <a href="https://mesomb.com">Page d'accueil</a>
-Installer
-sh
-yarn add @hachther/mesomb
+### 🏠 [Homepage](https://mesomb.com)
 
-ou
-npm install @hachther/mesomb
+## Install
 
-Utilisation
-Consultez la documentation complète ici
+```sh
+dart pub add mesomb_dart
 
-Voici quelques exemples rapides
+```
 
-Collecter de l'argent depuis un compte
-Importation ES6
+## Usage
 
-Dart
-import 'package:mesomb/mesomb.dart';
+Check the full documentation [here](docs.md)
 
-final payment = PaymentOperation(applicationKey: '<applicationKey>', accessKey: '<AccessKey>', secretKey: '<SecretKey>');
-final response = await payment.makeCollect(amount: 100, service: 'MTN', payer: '677550203', nonce: RandomGenerator.nonce());
+Below some quick examples
+
+### Collect money from an account
+
+ES6 import
+
+```dart
+import 'package:PaymentMeSomb/mesomb.dart';
+
+void main() async {
+ final payment = PaymentOperation(
+  applicationKey: '<applicationKey>',
+  accessKey: '<AccessKey>',
+  secretKey: '<SecretKey>',
+ );
+ final response = await payment.makeCollect(
+  amount: 100,
+  service: 'MTN',
+  payer: '677550203',
+  nonce: RandomGenerator.nonce(),
+ );
+ print(response.isOperationSuccess());
+ print(response.isTransactionSuccess());
+}
+```
+
+Modular include
+
+```dart
+import 'package:PaymentMeSomb/mesomb.dart';
+
+void main() async {
+final payment = PaymentOperation(
+    applicationKey: '<applicationKey>',
+    accessKey: '<AccessKey>',
+    secretKey: '<SecretKey>',
+);
+final response = await payment.makeCollect(
+    amount: 100,
+    service: 'MTN',
+    payer: '677550203',
+    nonce: RandomGenerator.nonce(),
+);
 print(response.isOperationSuccess());
 print(response.isTransactionSuccess());
+}
+```
 
-Inclusion modulaire
+### Depose money in an account
 
-Dart
-import 'package:mesomb/mesomb.dart' as mesomb;
+ES6 import
 
-final payment = mesomb.PaymentOperation(applicationKey: '<applicationKey>', accessKey: '<AccessKey>', secretKey: '<SecretKey>');
-final response = await payment.makeCollect(amount: 100, service: 'MTN', payer: '677550203', nonce: mesomb.RandomGenerator.nonce());
-print(response.isOperationSuccess());
-print(response.isTransactionSuccess());
+```dart
+import 'package:PaymentMeSomb/mesomb.dart';
 
-Déposer de l'argent dans un compte
-Importation ES6
+void main() async {
+ final payment = PaymentOperation(
+  applicationKey: '<applicationKey>',
+  accessKey: '<AccessKey>',
+  secretKey: '<SecretKey>',
+ );
+ final response = await payment.makeDeposit(
+  amount: 100,
+  service: 'MTN',
+  receiver: '677550203',
+  nonce: RandomGenerator.nonce(),
+ );
+ print(response.isOperationSuccess());
+ print(response.isTransactionSuccess());
+}
+```
 
-Dart
+Modular include
+
+```dart
+import 'package:PaymentMeSomb/mesomb.dart';
+
+void main() async {
+ final payment = PaymentOperation(
+  applicationKey: '<applicationKey>',
+  accessKey: '<AccessKey>',
+  secretKey: '<SecretKey>',
+ );
+ final response = await payment.makeDeposit(
+  amount: 100,
+  service: 'MTN',
+  receiver: '677550203',
+  nonce: RandomGenerator.nonce(),
+ );
+ print(response.isOperationSuccess());
+ print(response.isTransactionSuccess());
+}
+```
+
+### Get application status
+
+ES6 import
+
+```dart
+import 'package:PaymentMeSomb/mesomb.dart';
+
+void main() async {
+ final payment = PaymentOperation(
+  applicationKey: '<applicationKey>',
+  accessKey: '<AccessKey>',
+  secretKey: '<SecretKey>',
+ );
+ final application = await payment.getStatus();
+ print(application);
+}
+```
+
+Modular include
+
+```dart
 import 'package:mesomb/mesomb.dart';
 
-final payment = PaymentOperation(applicationKey: '<applicationKey>', accessKey: '<AccessKey>', secretKey: '<SecretKey>');
-final response = await payment.makeDeposit(amount: 100, service: 'MTN', receiver: '677550203', nonce: RandomGenerator.nonce());
-print(response.isOperationSuccess());
-print(response.isTransactionSuccess());
+void main() async {
+  final payment = PaymentOperation(
+    applicationKey: '<applicationKey>',
+    accessKey: '<AccessKey>',
+    secretKey: '<SecretKey>',
+  );
+  final application = await payment.getStatus();
+  print(application);
+}
+```
 
-Inclusion modulaire
+### Get transactions by IDs
 
-Dart
-import 'package:mesomb/mesomb.dart' as mesomb;
+ES6 import
 
-final payment = mesomb.PaymentOperation(applicationKey: '<applicationKey>', accessKey: '<AccessKey>', secretKey: '<SecretKey>');
-final response = await payment.makeDeposit(amount: 100, service: 'MTN', receiver: '677550203', nonce: mesomb.RandomGenerator.nonce());
-print(response.isOperationSuccess());
-print(response.isTransactionSuccess());
-
-Obtenir le statut de l'application
-Importation ES6
-
-Dart
+```dart
 import 'package:mesomb/mesomb.dart';
 
-final payment = PaymentOperation(applicationKey: '<applicationKey>', accessKey: '<AccessKey>', secretKey: '<SecretKey>');
-final application = await payment.getStatus();
-print(application);
+void main() async {
+  var payment = PaymentOperation(
+    applicationKey: '<applicationKey>',
+    accessKey: '<AccessKey>',
+    secretKey: '<SecretKey>',
+  );
 
-Inclusion modulaire
+  var transactions = await payment.getTransactions(['ID1', 'ID2']);
 
-Dart
-import 'package:mesomb/mesomb.dart' as mesomb;
+  print(transactions);
+}
 
-final payment = mesomb.PaymentOperation(applicationKey: '<applicationKey>', accessKey: '<AccessKey>', secretKey: '<SecretKey>');
-final application = await payment.getStatus();
-print(application);
+```
 
-Obtenir les transactions par ID
-Importation ES6
+Modular include
 
-Dart
+```dart
 import 'package:mesomb/mesomb.dart';
 
-final payment = PaymentOperation(applicationKey: '<applicationKey>', accessKey: '<AccessKey>', secretKey: '<SecretKey>');
-final transactions = await payment.getTransactions(['ID1', 'ID2']);
-print(transactions);
+void main() async {
+  var payment = PaymentOperation(
+    applicationKey: '<applicationKey>',
+    accessKey: '<AccessKey>',
+    secretKey: '<SecretKey>',
+  );
 
-Inclusion modulaire
+  var transactions = await payment.getTransactions(['ID1', 'ID2']);
 
-Dart
-import 'package:mesomb/mesomb.dart' as mesomb;
+  print(transactions);
+}
 
-final payment = mesomb.PaymentOperation(applicationKey: '<applicationKey>', accessKey: '<AccessKey>', secretKey: '<SecretKey>');
-final transactions = await payment.getTransactions(['ID1', 'ID2']);
-print(transactions);
+```
 
-Auteur
-Hachther LLC <contact@hachther.com>
+## Author
 
-⦁ 
-Site web : <a href="https://www.hachther.com">https://www.hachther.com</a>
-⦁ 
-Twitter : <a href="https://twitter.com/hachther">@hachther</a>
-⦁ 
-Github : <a href="https://github.com/hachther">@hachther</a>
-⦁ 
-LinkedIn : <a href="https://linkedin.com/in/hachther">@hachther</a>
+👤 **Hachther LLC <contact@hachther.com>**
 
+* Website: https://www.hachther.com
+* Twitter: [@hachther](https://twitter.com/hachther)
+* Github: [@hachther](https://github.com/hachther)
+* LinkedIn: [@hachther](https://linkedin.com/in/hachther)
+
+## Show your support
+
+Give a ⭐️ if this project helped you!
