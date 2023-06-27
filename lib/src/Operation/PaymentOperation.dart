@@ -1,14 +1,14 @@
 import 'dart:convert';
 
-import 'package:PaymentMeSomb/src/Model/Application.dart';
-import 'package:PaymentMeSomb/src/Model/Transaction.dart';
+import '../Model/Application.dart';
+import '../Model/Transaction.dart';
 import 'package:http/http.dart' as http;
 
 import '../Exception/InvalidClientRequestException.dart';
 import '../Exception/PermissionDeniedException.dart';
 import '../Exception/ServerException.dart';
 import '../Exception/ServiceNotFoundException.dart';
-import '../Model/TransactionReponse.dart';
+import '../Model/TransactionResponse.dart';
 import 'MeSomb.dart';
 import 'Signature.dart';
 

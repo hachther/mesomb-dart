@@ -5,9 +5,9 @@ class Product {
   late double? amount;
 
   Product(Map<String, dynamic> data) {
-    this.name = data['name'];
-    this.category = data['category'];
-    this.quantity = data['quantity'];
-    this.amount = data['amount'];
+    name = data['name'];
+    category = data['category'];
+    quantity = data['quantity'];
+    amount = data['amount'];
   }
 }

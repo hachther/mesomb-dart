@@ -12,13 +12,8 @@ class Signature {
 
     var timestamp = (date.millisecondsSinceEpoch ~/ 1000).toInt();
 
-    if (headers == null) {
-      headers = {};
-    }
-    headers['host'] = parse.scheme +
-        '://' +
-        parse.host +
-        (parse.hasPort ? ':' + parse.port.toString() : '');
+    headers ??= {};
+    headers['host'] = '${parse.scheme}://${parse.host}${parse.hasPort ? ':${parse.port}' : ''}';
     headers['x-mesomb-date'] = timestamp.toString();
     headers['x-mesomb-nonce'] = nonce;
     var sortedKeys = headers.keys.toList()..sort();
@@ -26,9 +21,7 @@ class Signature {
         sortedKeys.map((k) => '${k.toLowerCase()}:${headers?[k]}').join('\n');
     print(canonicalHeaders);
 
-    if (body == null) {
-      body = {};
-    }
+    body ??= {};
     var bodyJson = jsonEncode(body);
     var payloadHash = sha1.convert(utf8.encode(bodyJson)).toString();
 

@@ -4,8 +4,8 @@ class Location {
   late String country;
 
   Location(Map<String, dynamic> data) {
-    this.town = data['town'];
-    this.region = data['region'];
-    this.country = data['country'];
+    town = data['town'];
+    region = data['region'];
+    country = data['country'];
   }
 }

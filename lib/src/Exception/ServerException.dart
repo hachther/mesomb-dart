@@ -2,10 +2,7 @@ class ServerException implements Exception {
   late String? code;
   late String? message;
 
-  ServerException(String message, String? code) {
-    this.message = message;
-    this.code = code;
-  }
+  ServerException(this.message, this.code);
 
   @override
   String toString() {

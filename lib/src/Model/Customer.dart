@@ -16,10 +16,10 @@ class Customer {
     email = data['email'];
     phone = data['phone'];
     town = data['town'];
-    this.region = data['region'];
-    this.country = data['country'];
-    this.first_name = data['first_name'];
-    this.last_name = data['last_name'];
-    this.address = data['address'];
+    region = data['region'];
+    country = data['country'];
+    first_name = data['first_name'];
+    last_name = data['last_name'];
+    address = data['address'];
   }
 }

@@ -1,6 +1,6 @@
-import 'package:PaymentMeSomb/src/Model/Customer.dart';
-import 'package:PaymentMeSomb/src/Model/Location.dart';
-import 'package:PaymentMeSomb/src/Model/Product.dart';
+import './Customer.dart';
+import './Location.dart';
+import './Product.dart';
 
 class Transaction {
   late String pk;

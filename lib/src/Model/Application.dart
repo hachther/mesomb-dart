@@ -1,4 +1,4 @@
-import 'package:PaymentMeSomb/src/Model/ApplicationBalance.dart';
+import './ApplicationBalance.dart';
 
 class Application {
   final String key;

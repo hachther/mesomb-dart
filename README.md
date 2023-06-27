@@ -36,7 +36,7 @@ Below some quick examples
 ES6 import
 
 ```dart
-import 'package:PaymentMeSomb/mesomb.dart';
+import 'package:mesomb/mesomb.dart';
 
 void main() async {
  final payment = PaymentOperation(
@@ -58,7 +58,7 @@ void main() async {
 Modular include
 
 ```dart
-import 'package:PaymentMeSomb/mesomb.dart';
+import 'package:mesomb/mesomb.dart';
 
 void main() async {
 final payment = PaymentOperation(
@@ -82,7 +82,7 @@ print(response.isTransactionSuccess());
 ES6 import
 
 ```dart
-import 'package:PaymentMeSomb/mesomb.dart';
+import 'package:mesomb/mesomb.dart';
 
 void main() async {
  final payment = PaymentOperation(
@@ -104,7 +104,7 @@ void main() async {
 Modular include
 
 ```dart
-import 'package:PaymentMeSomb/mesomb.dart';
+import 'package:mesomb/mesomb.dart';
 
 void main() async {
  final payment = PaymentOperation(
@@ -128,7 +128,7 @@ void main() async {
 ES6 import
 
 ```dart
-import 'package:PaymentMeSomb/mesomb.dart';
+import 'package:mesomb/mesomb.dart';
 
 void main() async {
  final payment = PaymentOperation(
