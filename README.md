@@ -21,7 +21,7 @@
 ## Install
 
 ```sh
-dart pub add mesomb_dart
+dart pub add mesomb
 
 ```
 
@@ -33,75 +33,27 @@ Below some quick examples
 
 ### Collect money from an account
 
-ES6 import
-
 ```dart
 import 'package:mesomb/mesomb.dart';
 
 void main() async {
  final payment = PaymentOperation(
-  applicationKey: '<applicationKey>',
-  accessKey: '<AccessKey>',
-  secretKey: '<SecretKey>',
+  '<applicationKey>',
+  '<AccessKey>',
+  '<SecretKey>',
  );
- final response = await payment.makeCollect(
-  amount: 100,
-  service: 'MTN',
-  payer: '677550203',
-  nonce: RandomGenerator.nonce(),
- );
+ final response = await payment.makeCollect({
+   'amount': 100,
+   'service': 'MTN',
+   'payer': '677550203',
+   'nonce': RandomGenerator.nonce(),
+ });
  print(response.isOperationSuccess());
  print(response.isTransactionSuccess());
-}
-```
-
-Modular include
-
-```dart
-import 'package:mesomb/mesomb.dart';
-
-void main() async {
-final payment = PaymentOperation(
-    applicationKey: '<applicationKey>',
-    accessKey: '<AccessKey>',
-    secretKey: '<SecretKey>',
-);
-final response = await payment.makeCollect(
-    amount: 100,
-    service: 'MTN',
-    payer: '677550203',
-    nonce: RandomGenerator.nonce(),
-);
-print(response.isOperationSuccess());
-print(response.isTransactionSuccess());
 }
 ```
 
 ### Depose money in an account
-
-ES6 import
-
-```dart
-import 'package:mesomb/mesomb.dart';
-
-void main() async {
- final payment = PaymentOperation(
-  applicationKey: '<applicationKey>',
-  accessKey: '<AccessKey>',
-  secretKey: '<SecretKey>',
- );
- final response = await payment.makeDeposit(
-  amount: 100,
-  service: 'MTN',
-  receiver: '677550203',
-  nonce: RandomGenerator.nonce(),
- );
- print(response.isOperationSuccess());
- print(response.isTransactionSuccess());
-}
-```
-
-Modular include
 
 ```dart
 import 'package:mesomb/mesomb.dart';
@@ -125,8 +77,6 @@ void main() async {
 
 ### Get application status
 
-ES6 import
-
 ```dart
 import 'package:mesomb/mesomb.dart';
 
@@ -141,44 +91,7 @@ void main() async {
 }
 ```
 
-Modular include
-
-```dart
-import 'package:mesomb/mesomb.dart';
-
-void main() async {
-  final payment = PaymentOperation(
-    applicationKey: '<applicationKey>',
-    accessKey: '<AccessKey>',
-    secretKey: '<SecretKey>',
-  );
-  final application = await payment.getStatus();
-  print(application);
-}
-```
-
 ### Get transactions by IDs
-
-ES6 import
-
-```dart
-import 'package:mesomb/mesomb.dart';
-
-void main() async {
-  var payment = PaymentOperation(
-    applicationKey: '<applicationKey>',
-    accessKey: '<AccessKey>',
-    secretKey: '<SecretKey>',
-  );
-
-  var transactions = await payment.getTransactions(['ID1', 'ID2']);
-
-  print(transactions);
-}
-
-```
-
-Modular include
 
 ```dart
 import 'package:mesomb/mesomb.dart';

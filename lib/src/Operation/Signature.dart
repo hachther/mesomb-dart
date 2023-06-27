@@ -19,7 +19,6 @@ class Signature {
     var sortedKeys = headers.keys.toList()..sort();
     var canonicalHeaders =
         sortedKeys.map((k) => '${k.toLowerCase()}:${headers?[k]}').join('\n');
-    print(canonicalHeaders);
 
     body ??= {};
     var bodyJson = jsonEncode(body);

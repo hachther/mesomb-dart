@@ -110,8 +110,6 @@ class PaymentOperation {
     var response =
         await http.post(uri, headers: headers, body: jsonEncode(body));
 
-    print('Response status: ${response.statusCode}');
-    print('Response body: ${response.body}');
     if (response.statusCode >= 400) {
       processClientException(response.statusCode, response.body);
     }
@@ -167,8 +165,6 @@ class PaymentOperation {
     var uri = Uri.parse(url);
     var response =
         await http.post(uri, body: jsonEncode(body), headers: headers);
-    print('Response status: ${response.statusCode}');
-    print('Response body: ${response.body}');
     if (response.statusCode >= 400) {
       processClientException(response.statusCode, response.body);
     }
@@ -240,8 +236,6 @@ class PaymentOperation {
         // 'Content-Type': 'application/json',
       },
     );
-    print(response.statusCode);
-    print(response.body);
 
     if (response.statusCode >= 400) {
       processClientException(response.statusCode, response.body);
