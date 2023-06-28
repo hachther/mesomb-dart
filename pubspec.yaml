@@ -1,13 +1,10 @@
 name: mesomb
-description: A starting point for Dart libraries or applications.
+description: Dart client to perform mobile payment operation with MeSomb
 version: 1.0.0
-# homepage: https://www.example.com
+homepage: https://mesomb.com
 
 environment:
   sdk: '>=2.17.1 <3.0.0'
-
-# dependencies:
-#   path: ^1.8.0
 
 dev_dependencies:
   lints: ^2.0.0

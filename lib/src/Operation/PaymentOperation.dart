@@ -17,11 +17,7 @@ class PaymentOperation {
   late String accessKey;
   late String secretKey;
 
-  PaymentOperation(String applicationKey, String accessKey, String secretKey) {
-    this.applicationKey = applicationKey;
-    this.accessKey = accessKey;
-    this.secretKey = secretKey;
-  }
+  PaymentOperation(this.applicationKey, this.accessKey, this.secretKey);
 
   String buildUrl(String endpoint) {
     String host = MeSomb.apiBase;
@@ -34,8 +30,8 @@ class PaymentOperation {
     String url = buildUrl(endpoint);
 
     Map<String, String> credentials = {
-      'accessKey': this.accessKey,
-      'secretKey': this.secretKey
+      'accessKey': accessKey,
+      'secretKey': secretKey
     };
 
     return Signature.signRequest(
@@ -100,7 +96,7 @@ class PaymentOperation {
       'x-mesomb-nonce': nonce,
       'Authorization': authorization,
       'Content-Type': 'application/json',
-      'X-MeSomb-Application': this.applicationKey
+      'X-MeSomb-Application': applicationKey
     };
     if (params['trxID'] != null) {
       headers['X-MeSomb-TrxID'] = params['trxID'];
