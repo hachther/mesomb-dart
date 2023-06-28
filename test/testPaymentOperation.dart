@@ -1,6 +1,6 @@
-import 'package:mesomb/src/Exception/InvalidClientRequestException.dart';
-import 'package:mesomb/src/Exception/PermissionDeniedException.dart';
-import 'package:mesomb/src/Exception/ServiceNotFoundException.dart';
+import 'package:mesomb/src/Exception/invalid_client_request_exception.dart';
+import 'package:mesomb/src/Exception/permission_denied_exception.dart';
+import 'package:mesomb/src/Exception/Service_not_found_exception.dart';
 import 'package:mesomb/src/Operation/MeSomb.dart';
 import 'package:mesomb/src/Operation/PaymentOperation.dart';
 import 'package:mesomb/src/util/RandomGenerator.dart';
