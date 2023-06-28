@@ -57,21 +57,20 @@ void main() async {
 
 ```dart
 import 'package:mesomb/mesomb.dart';
-
 void main() async {
- final payment = PaymentOperation(
-  applicationKey: '<applicationKey>',
-  accessKey: '<AccessKey>',
-  secretKey: '<SecretKey>',
- );
- final response = await payment.makeDeposit(
-  amount: 100,
-  service: 'MTN',
-  receiver: '677550203',
-  nonce: RandomGenerator.nonce(),
- );
- print(response.isOperationSuccess());
- print(response.isTransactionSuccess());
+  var payment = PaymentOperation(
+    '<applicationKey>',
+    '<AccessKey>',
+    '<SecretKey>',
+  );
+  final response = await payment.makeDeposit({
+    'amount': 100,
+    'service': 'MTN',
+    'receiver': '677550203',
+    'nonce': RandomGenerator.nonce(),
+  });
+  print(response.isOperationSuccess());
+  print(response.isTransactionSuccess());
 }
 ```
 
@@ -81,13 +80,13 @@ void main() async {
 import 'package:mesomb/mesomb.dart';
 
 void main() async {
- final payment = PaymentOperation(
-  applicationKey: '<applicationKey>',
-  accessKey: '<AccessKey>',
-  secretKey: '<SecretKey>',
- );
- final application = await payment.getStatus();
- print(application);
+  var payment = PaymentOperation(
+    '<applicationKey>',
+    '<AccessKey>',
+    '<SecretKey>',
+  );
+  final application = await payment.getStatus(DateTime.now());
+  print(application);
 }
 ```
 
@@ -98,12 +97,12 @@ import 'package:mesomb/mesomb.dart';
 
 void main() async {
   var payment = PaymentOperation(
-    applicationKey: '<applicationKey>',
-    accessKey: '<AccessKey>',
-    secretKey: '<SecretKey>',
+    '<applicationKey>',
+    '<AccessKey>',
+    '<SecretKey>',
   );
 
-  var transactions = await payment.getTransactions(['ID1', 'ID2']);
+  var transactions = await payment.getTransactions(['ID1', 'ID2'], null);
 
   print(transactions);
 }
