@@ -1,4 +1,4 @@
-import './Transaction.dart';
+import './transaction.dart';
 
 class TransactionResponse {
   final bool success;

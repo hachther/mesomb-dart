@@ -1,6 +1,6 @@
-import './Customer.dart';
-import './Location.dart';
-import './Product.dart';
+import './customer.dart';
+import './location.dart';
+import './product.dart';
 
 class Transaction {
   late String pk;
@@ -30,7 +30,7 @@ class Transaction {
     success = data['status'];
     type = data['type'];
     amount = data['amount'];
-    fees = data['fees'];
+    fees = data['fees'].toDouble();
     b_party = data['b_party'];
     message = data['message'];
     service = data['service'];

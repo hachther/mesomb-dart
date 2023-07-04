@@ -1,4 +1,4 @@
-import './ApplicationBalance.dart';
+import './application_balance.dart';
 
 class Application {
   final String key;
