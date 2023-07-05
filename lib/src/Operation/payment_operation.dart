@@ -71,7 +71,7 @@ class PaymentOperation {
       'receiver': params['receiver'],
       'country': params['country'] ?? 'CM',
       'currency': params['currency'] ?? 'XAF',
-      'source': 'SDKDart/${MeSomb.VERSION}',
+      'source': 'SDKDart/${MeSomb.version}',
     };
     if (params['location'] != null) {
       body['location'] = params['location'];
@@ -127,7 +127,7 @@ class PaymentOperation {
       'currency': params['currency'] ?? 'XAF',
       'fees': params['feesIncluded'] ?? true,
       'conversion': params['conversion'] ?? false,
-      'source': 'SDKDart/${MeSomb.VERSION}',
+      'source': 'SDKDart/${MeSomb.version}',
     };
     if (params['location'] != null) {
       body['location'] = params['location'];

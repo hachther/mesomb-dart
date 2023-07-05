@@ -5,7 +5,7 @@ version: 1.0.1
 homepage: https://mesomb.com
 
 environment:
-  sdk: '>=2.19.0'
+  sdk: '>=2.19.0 <=3.1.0'
 
 dev_dependencies:
   lints: ^2.0.0

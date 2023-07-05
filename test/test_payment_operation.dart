@@ -10,7 +10,7 @@ void main() {
     // var applicationKey = '2bb525516ff374bb52545bf22ae4da7d655ba9fd';
     // var accessKey = 'c6c40b76-8119-4e93-81bf-bfb55417b392';
     // var secretKey = 'fe8c2445-810f-4caa-95c9-778d51580163';
-    MeSomb.apiBase = 'http://192.168.8.101:8000';
+    MeSomb.apiBase = 'http://192.168.8.110:8000';
 
     // test('testMakeDeposit', () async {
     //   MeSomb.apiBase = 'http://192.168.8.101:8000';
@@ -74,7 +74,7 @@ void main() {
     });
 
     test('testMakeDepositSuccess', () async {
-      MeSomb.apiBase = 'http://192.168.8.101:8000';
+      // MeSomb.apiBase = 'http://192.168.8.101:8000';
     });
     test('testMakeDepositSuccess', () async {
       var operation = PaymentOperation(
