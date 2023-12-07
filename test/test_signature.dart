@@ -1,4 +1,4 @@
-import 'package:mesomb/src/Operation/signature.dart';
+import 'package:mesomb/src/signature.dart';
 import 'package:test/test.dart';
 
 void main() {

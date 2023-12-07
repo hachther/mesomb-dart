@@ -10,7 +10,7 @@ class Application {
   final String name;
   final dynamic security;
   final String status;
-  final String url;
+  final String? url;
 
   Application(Map<String, dynamic> data)
       : key = data['key'],

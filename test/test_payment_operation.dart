@@ -2,7 +2,7 @@ import 'package:mesomb/mesomb.dart';
 import 'package:mesomb/src/Exception/invalid_client_request_exception.dart';
 import 'package:mesomb/src/Exception/permission_denied_exception.dart';
 import 'package:mesomb/src/Exception/service_not_found_exception.dart';
-import 'package:mesomb/src/Operation/mesomb.dart';
+import 'package:mesomb/src/mesomb.dart';
 import 'package:test/test.dart';
 
 void main() {
@@ -10,7 +10,7 @@ void main() {
     // var applicationKey = '2bb525516ff374bb52545bf22ae4da7d655ba9fd';
     // var accessKey = 'c6c40b76-8119-4e93-81bf-bfb55417b392';
     // var secretKey = 'fe8c2445-810f-4caa-95c9-778d51580163';
-    MeSomb.apiBase = 'http://192.168.8.110:8000';
+    MeSomb.apiBase = 'http://192.168.100.10:8000';
 
     // test('testMakeDeposit', () async {
     //   MeSomb.apiBase = 'http://192.168.8.101:8000';
@@ -57,6 +57,7 @@ void main() {
               }),
           throwsA(isA<PermissionDeniedException>()));
     });
+
     test('Should make payment test with invalid amount', () {
       // MeSomb.apiBase = 'http://192.168.8.104:8000';
       var operation = PaymentOperation(
@@ -74,9 +75,6 @@ void main() {
     });
 
     test('testMakeDepositSuccess', () async {
-      // MeSomb.apiBase = 'http://192.168.8.101:8000';
-    });
-    test('testMakeDepositSuccess', () async {
       var operation = PaymentOperation(
           '2bb525516ff374bb52545bf22ae4da7d655ba9fd',
           'c6c40b76-8119-4e93-81bf-bfb55417b392',
@@ -90,12 +88,13 @@ void main() {
       expect(response.success, isTrue);
       expect(response.status, equals('SUCCESS'));
       expect(response.transaction.amount, equals(100));
-      expect(response.transaction.fees, equals(0));
+      expect(response.transaction.fees, equals(2.0));
       expect(response.transaction.service, equals('MTN'));
       expect(response.transaction.b_party, equals('237677553904'));
       expect(response.transaction.country, equals('CM'));
       expect(response.transaction.currency, equals('XAF'));
     });
+
     test('Should make deposit test with success with customer and product data',
         () async {
       var customer = {
@@ -123,7 +122,7 @@ void main() {
       expect(response.success, isTrue);
       expect(response.status, equals('SUCCESS'));
       expect(response.transaction.amount, equals(100));
-      expect(response.transaction.fees, equals(0));
+      expect(response.transaction.fees, equals(2));
       expect(response.transaction.service, equals('MTN'));
       expect(response.transaction.b_party, equals('237677553904'));
       expect(response.transaction.country, equals('CM'));
@@ -137,8 +136,7 @@ void main() {
       expect(response.transaction.location?.country, equals('Cameroun'));
     });
     test('testMakeCollectWithNotFoundService', () {
-      var operation =
-          PaymentOperation(
+      var operation = PaymentOperation(
           '2bb525516ff374bb52545bf22ae4da7d655ba9fd' 'f',
           'c6c40b76-8119-4e93-81bf-bfb55417b392',
           'fe8c2445-810f-4caa-95c9-778d51580163');
@@ -154,8 +152,7 @@ void main() {
     });
 
     test('testMakeCollectWithPermissionDenied', () {
-      var operation =
-          PaymentOperation(
+      var operation = PaymentOperation(
           '2bb525516ff374bb52545bf22ae4da7d655ba9fd',
           'f' 'c6c40b76-8119-4e93-81bf-bfb55417b392',
           'fe8c2445-810f-4caa-95c9-778d51580163');
@@ -170,9 +167,9 @@ void main() {
     });
     test('Should make payment test with invalid amount', () {
       var operation = PaymentOperation(
-        '2bb525516ff374bb52545bf22ae4da7d655ba9fd',
-        'c6c40b76-8119-4e93-81bf-bfb55417b392',
-        'fe8c2445-810f-4caa-95c9-778d51580163');
+          '2bb525516ff374bb52545bf22ae4da7d655ba9fd',
+          'c6c40b76-8119-4e93-81bf-bfb55417b392',
+          'fe8c2445-810f-4caa-95c9-778d51580163');
       expect(
           () async => await operation.makeCollect({
                 'amount': 5,
@@ -182,11 +179,12 @@ void main() {
               }),
           throwsA(isA<InvalidClientRequestException>()));
     });
+
     test('testMakeCollectSuccess', () async {
       var operation = PaymentOperation(
-        '2bb525516ff374bb52545bf22ae4da7d655ba9fd',
-        'c6c40b76-8119-4e93-81bf-bfb55417b392',
-        'fe8c2445-810f-4caa-95c9-778d51580163');
+          '2bb525516ff374bb52545bf22ae4da7d655ba9fd',
+          'c6c40b76-8119-4e93-81bf-bfb55417b392',
+          'fe8c2445-810f-4caa-95c9-778d51580163');
       var response = await operation.makeCollect({
         'amount': 100,
         'payer': '237677553904',
@@ -196,14 +194,15 @@ void main() {
       });
       expect(response.success, isTrue);
       expect(response.status, equals('SUCCESS'));
-      expect(response.transaction.amount, equals(97));
-      expect(response.transaction.fees, equals(3));
+      expect(response.transaction.amount, equals(98));
+      expect(response.transaction.fees, equals(2));
       expect(response.transaction.service, equals('MTN'));
       expect(response.transaction.b_party, equals('237677553904'));
       expect(response.transaction.country, equals('CM'));
       expect(response.transaction.currency, equals('XAF'));
       expect(response.transaction.reference, equals('1'));
     });
+
     test('Should make collect test with success with customer and product data',
         () async {
       var customer = {
@@ -214,10 +213,9 @@ void main() {
       };
       var location = {'town': 'Douala', 'country': 'Cameroun'};
       var payment = PaymentOperation(
-        '2bb525516ff374bb52545bf22ae4da7d655ba9fd',
-        'c6c40b76-8119-4e93-81bf-bfb55417b392',
-        'fe8c2445-810f-4caa-95c9-778d51580163'
-      );
+          '2bb525516ff374bb52545bf22ae4da7d655ba9fd',
+          'c6c40b76-8119-4e93-81bf-bfb55417b392',
+          'fe8c2445-810f-4caa-95c9-778d51580163');
       var response = await payment.makeCollect({
         'amount': 100,
         'customer': customer,
@@ -231,8 +229,8 @@ void main() {
       });
       expect(response.success, isTrue);
       expect(response.status, equals('SUCCESS'));
-      expect(response.transaction.amount, equals(97));
-      expect(response.transaction.fees, equals(3));
+      expect(response.transaction.amount, equals(98));
+      expect(response.transaction.fees, equals(2));
       expect(response.transaction.service, equals('MTN'));
       expect(response.transaction.b_party, equals('237677553904'));
       expect(response.transaction.country, equals('CM'));
@@ -278,9 +276,9 @@ void main() {
       expect(
         () async {
           final payment = PaymentOperation(
-            'f' '2bb525516ff374bb52545bf22ae4da7d655ba9fd',
-            'c6c40b76-8119-4e93-81bf-bfb55417b392',
-            'fe8c2445-810f-4caa-95c9-778d51580163');
+              'f' '2bb525516ff374bb52545bf22ae4da7d655ba9fd',
+              'c6c40b76-8119-4e93-81bf-bfb55417b392',
+              'fe8c2445-810f-4caa-95c9-778d51580163');
           await payment.getStatus(DateTime.now());
         },
         throwsA(isA<ServiceNotFoundException>()),
@@ -289,8 +287,7 @@ void main() {
     test('Should get status with not permission denied', () async {
       expect(
         () async {
-          final payment =
-              PaymentOperation(
+          final payment = PaymentOperation(
               '2bb525516ff374bb52545bf22ae4da7d655ba9fd',
               'f' 'c6c40b76-8119-4e93-81bf-bfb55417b392',
               'fe8c2445-810f-4caa-95c9-778d51580163');
@@ -302,17 +299,16 @@ void main() {
 
     test('Should get status success', () async {
       final payment = PaymentOperation(
-      '2bb525516ff374bb52545bf22ae4da7d655ba9fd',
-      'c6c40b76-8119-4e93-81bf-bfb55417b392',
-      'fe8c2445-810f-4caa-95c9-778d51580163');
+          '2bb525516ff374bb52545bf22ae4da7d655ba9fd',
+          'c6c40b76-8119-4e93-81bf-bfb55417b392',
+          'fe8c2445-810f-4caa-95c9-778d51580163');
       final response = await payment.getStatus(DateTime.now());
-      expect(response.name, equals('Meudocta Shop'));
+      expect(response.name, equals('Meudocta'));
     });
 
     test('Should get transactions with not service found', () async {
       expect(() async {
-        final payment =
-            PaymentOperation(
+        final payment = PaymentOperation(
             'f' '2bb525516ff374bb52545bf22ae4da7d655ba9fd',
             'c6c40b76-8119-4e93-81bf-bfb55417b392',
             'fe8c2445-810f-4caa-95c9-778d51580163');
@@ -323,8 +319,7 @@ void main() {
 
     test('Should get transactions with not permission denied', () async {
       expect(() async {
-        final payment =
-            PaymentOperation(
+        final payment = PaymentOperation(
             '2bb525516ff374bb52545bf22ae4da7d655ba9fd',
             'f' 'c6c40b76-8119-4e93-81bf-bfb55417b392',
             'fe8c2445-810f-4caa-95c9-778d51580163');
@@ -335,13 +330,13 @@ void main() {
 
     test('Should get transactions success', () async {
       final payment = PaymentOperation(
-        '2bb525516ff374bb52545bf22ae4da7d655ba9fd',
-        'c6c40b76-8119-4e93-81bf-bfb55417b392',
-        'fe8c2445-810f-4caa-95c9-778d51580163');
+          '2bb525516ff374bb52545bf22ae4da7d655ba9fd',
+          'c6c40b76-8119-4e93-81bf-bfb55417b392',
+          'fe8c2445-810f-4caa-95c9-778d51580163');
       final response = await payment
-          .getTransactions(['9886f099-dee2-4eaa-9039-e92b2ee33353'], null);
+          .getTransactions(['d265b9d5-b623-408a-bb92-9febdd9a1666'], null);
       expect(response.length, equals(1));
-      expect(response[0].pk, equals('9886f099-dee2-4eaa-9039-e92b2ee33353'));
+      expect(response[0].pk, equals('d265b9d5-b623-408a-bb92-9febdd9a1666'));
     });
   });
 }

@@ -3,7 +3,7 @@ import './transaction.dart';
 class TransactionResponse {
   final bool success;
   late String message;
-  late String redirect;
+  late String? redirect;
   late Transaction transaction;
   late String reference;
   late String status; // 'SUCCESS' | 'FAILED' | 'PENDING'

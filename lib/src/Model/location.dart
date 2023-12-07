@@ -1,7 +1,7 @@
 class Location {
   late String town;
-  late String region;
-  late String country;
+  late String? region;
+  late String? country;
 
   Location(Map<String, dynamic> data) {
     town = data['town'];
