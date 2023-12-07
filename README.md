@@ -1,6 +1,6 @@
 <h1 style="text-align: center">Welcome to dart-mesomb 👋</h1>
 <p>
-  <img alt="Version" src="https://img.shields.io/badge/version-1.0-blue.svg?cacheSeconds=2592000" />
+  <img alt="Version" src="https://img.shields.io/badge/version-1.0.3-blue.svg?cacheSeconds=2592000" />
   <a href="https://mesomb.hachther.com/en/api/v1.1/schema/" target="_blank">
     <img alt="Documentation" src="https://img.shields.io/badge/documentation-yes-brightgreen.svg" />
   </a>
@@ -26,8 +26,6 @@ dart pub add mesomb
 ```
 
 ## Usage
-
-Check the full documentation [here](docs.md)
 
 Below some quick examples
 

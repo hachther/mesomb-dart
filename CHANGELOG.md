@@ -3,11 +3,15 @@
 - Initial version.
 
 ## 1.0.1
-## pour la nouvelle version il y'a ajout des fichiers exemples 
 
-- Initial version.
+- Adding some examples
 
 ## 1.0.2
-## mise a jour des fichiers exemples et ameliorations des conventions de dart.
 
-- Initial version.
+- Updated examples
+- Enhance conventions
+
+## 1.0.3
+
+- Update dependencies version
+- Add method to check transaction at the operator level
