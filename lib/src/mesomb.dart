@@ -5,5 +5,7 @@ class MeSomb {
 
   static String algorithm = 'HMAC-SHA1';
 
-  static String version = '1.0.3';
+  static String version = '1.0.4';
+
+  static String language = 'en';
 }

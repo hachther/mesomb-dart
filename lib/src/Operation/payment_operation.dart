@@ -22,7 +22,7 @@ class PaymentOperation {
   String _buildUrl(String endpoint) {
     String host = MeSomb.apiBase;
     String apiVersion = MeSomb.apiVersion;
-    return "$host/en/api/$apiVersion/$endpoint";
+    return "$host/api/$apiVersion/$endpoint";
   }
 
   String _getAuthorization(String method, String endpoint, DateTime date,
@@ -65,6 +65,7 @@ class PaymentOperation {
       'x-mesomb-nonce': nonce,
       'Content-Type': 'application/json',
       'X-MeSomb-Application': applicationKey,
+      'Accept-Language': MeSomb.language,
     };
     if (mode != null) {
       headers['X-MeSomb-OperationMode'] = mode;
