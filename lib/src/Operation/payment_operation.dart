@@ -235,28 +235,40 @@ class PaymentOperation {
   }
 
   Future<List<Transaction>> getTransactions(
-    List<String> ids,
-    DateTime? date,
-  ) async {
-    final endpoint = 'payment/transactions/?ids=${ids.join(',')}';
+      List<String> ids,
+      {String source = 'MESOMB', String? nonce}
+      ) async {
+    Map<String, String> query = {
+      'ids': ids.join(','),
+      'source': source
+    };
+    if(nonce != null) {
+      query['nonce'] = nonce;
+    }
 
-    date ??= DateTime.now();
+    final endpoint = 'payment/transactions/?${Uri(queryParameters: query).query}';
 
-    return (await _executeRequest('GET', endpoint, date, '', null, null))
+    return (await _executeRequest('GET', endpoint, DateTime.now(), '', null, null))
         .map((d) => Transaction(d))
         .toList()
         .cast<Transaction>();
   }
 
   Future<List<Transaction>> checkTransactions(
-    List<String> ids,
-    DateTime? date,
-  ) async {
-    final endpoint = 'payment/transactions/check/?ids=${ids.join(',')}';
+      List<String> ids,
+      {String source = 'MESOMB', String? nonce}
+      ) async {
+    Map<String, String> query = {
+      'ids': ids.join(','),
+      'source': source
+    };
+    if(nonce != null) {
+      query['nonce'] = nonce;
+    }
 
-    date ??= DateTime.now();
+    final endpoint = 'payment/transactions/?${Uri(queryParameters: query).query}';
 
-    return (await _executeRequest('GET', endpoint, date, '', null, null))
+    return (await _executeRequest('GET', endpoint, DateTime.now(), '', null, null))
         .map((d) => Transaction(d))
         .toList()
         .cast<Transaction>();

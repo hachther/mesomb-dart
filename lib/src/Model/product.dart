@@ -8,6 +8,6 @@ class Product {
     name = data['name'];
     category = data['category'];
     quantity = data['quantity'];
-    amount = data['amount'];
+    amount = data['amount'] is String ? double.tryParse(data['amount']): data['amount'];
   }
 }

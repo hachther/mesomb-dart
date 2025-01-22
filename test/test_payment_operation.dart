@@ -10,7 +10,7 @@ void main() {
     // var applicationKey = '2bb525516ff374bb52545bf22ae4da7d655ba9fd';
     // var accessKey = 'c6c40b76-8119-4e93-81bf-bfb55417b392';
     // var secretKey = 'fe8c2445-810f-4caa-95c9-778d51580163';
-    MeSomb.apiBase = 'http://192.168.100.10:8000';
+    MeSomb.apiBase = 'http://127.0.0.1:8000';
 
     // test('testMakeDeposit', () async {
     //   MeSomb.apiBase = 'http://192.168.8.101:8000';
@@ -303,7 +303,7 @@ void main() {
           'c6c40b76-8119-4e93-81bf-bfb55417b392',
           'fe8c2445-810f-4caa-95c9-778d51580163');
       final response = await payment.getStatus(DateTime.now());
-      expect(response.name, equals('Meudocta'));
+      expect(response.name, equals('Meudocta Shop'));
     });
 
     test('Should get transactions with not service found', () async {
@@ -313,7 +313,7 @@ void main() {
             'c6c40b76-8119-4e93-81bf-bfb55417b392',
             'fe8c2445-810f-4caa-95c9-778d51580163');
         await payment
-            .getTransactions(['c6c40b76-8119-4e93-81bf-bfb55417b392'], null);
+            .getTransactions(['c6c40b76-8119-4e93-81bf-bfb55417b392']);
       }, throwsA(isA<ServiceNotFoundException>()));
     });
 
@@ -324,7 +324,7 @@ void main() {
             'f' 'c6c40b76-8119-4e93-81bf-bfb55417b392',
             'fe8c2445-810f-4caa-95c9-778d51580163');
         await payment
-            .getTransactions(['c6c40b76-8119-4e93-81bf-bfb55417b392'], null);
+            .getTransactions(['c6c40b76-8119-4e93-81bf-bfb55417b392']);
       }, throwsA(isA<PermissionDeniedException>()));
     });
 
@@ -334,9 +334,35 @@ void main() {
           'c6c40b76-8119-4e93-81bf-bfb55417b392',
           'fe8c2445-810f-4caa-95c9-778d51580163');
       final response = await payment
-          .getTransactions(['d265b9d5-b623-408a-bb92-9febdd9a1666'], null);
+          .getTransactions(['d265b9d5-b623-408a-bb92-9febdd9a1666']);
       expect(response.length, equals(1));
       expect(response[0].pk, equals('d265b9d5-b623-408a-bb92-9febdd9a1666'));
     });
+
+    test('Should get transactions success with nonce', () async {
+      final payment = PaymentOperation(
+          '2bb525516ff374bb52545bf22ae4da7d655ba9fd',
+          'c6c40b76-8119-4e93-81bf-bfb55417b392',
+          'fe8c2445-810f-4caa-95c9-778d51580163');
+      final response = await payment.getTransactions(
+          ['301930f5-4789-44d9-b2d7-3f917b97dc00'],
+          nonce: 'YfWsvAq4cOJW0t9yIgUn6bWVtD8vqqe4bsFBr7Za'
+      );
+      expect(response.length, equals(1));
+      expect(response[0].pk, equals('301930f5-4789-44d9-b2d7-3f917b97dc00'));
+    });
+
+    // test('Should generate generate link', () async {
+    //   final payment = PaymentOperation(
+    //       '2bb525516ff374bb52545bf22ae4da7d655ba9fd',
+    //       'c6c40b76-8119-4e93-81bf-bfb55417b392',
+    //       'fe8c2445-810f-4caa-95c9-778d51580163');
+    //   final link = payment.generatePaymentLink({
+    //     'amount': 100,
+    //     'callback': 'https://mesomb.cm/callback',
+    //     'nonce': RandomGenerator.nonce(),
+    //   });
+    //   print(link);
+    // });
   });
 }

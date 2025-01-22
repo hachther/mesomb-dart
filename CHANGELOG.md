@@ -23,3 +23,12 @@
 ## 1.0.5
 
 - Update dart sdk
+
+## 1.1.0
+
+- Handle language translation
+- Update response parsing
+
+## 1.1.1
+
+- Fix bug in response parsing when reference is null

@@ -5,7 +5,7 @@ class TransactionResponse {
   late String message;
   late String? redirect;
   late Transaction transaction;
-  late String reference;
+  late String? reference;
   late String status; // 'SUCCESS' | 'FAILED' | 'PENDING'
 
   TransactionResponse(Map<String, dynamic> data)
