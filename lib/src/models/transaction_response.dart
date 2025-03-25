@@ -1,11 +1,23 @@
 import './transaction.dart';
 
+/// Transaction response object.
 class TransactionResponse {
+  /// Indicates if the operation was successful.
   final bool success;
+
+  /// Message from the operation.
   late String message;
+
+  /// Redirect URL.
   late String? redirect;
+
+  /// Transaction object.
   late Transaction transaction;
+
+  /// Reference of the transaction.
   late String? reference;
+
+  /// Status of the transaction.
   late String status; // 'SUCCESS' | 'FAILED' | 'PENDING'
 
   TransactionResponse(Map<String, dynamic> data)
@@ -22,6 +34,6 @@ class TransactionResponse {
   }
 
   bool isTransactionSuccess() {
-    return success && status == 'SUCCESS';
+    return transaction.isSuccess();
   }
 }

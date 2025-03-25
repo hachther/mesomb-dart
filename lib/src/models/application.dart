@@ -1,14 +1,25 @@
 import './application_balance.dart';
 
 class Application {
+  /// The key of the application
   final String key;
+
+  /// The logo of the application
   final String? logo;
+
+  /// The balances of the application
   late List<ApplicationBalance> balances;
+
+  /// The countries of the application
   final List<String> countries;
+
+  /// The description of the application
   final String description;
-  final bool is_live;
+
+  /// Whether the application is live
   final String name;
-  final dynamic security;
+
+  /// The security of the application
   final String? url;
 
   Application(Map<String, dynamic> data)
@@ -21,9 +32,7 @@ class Application {
         countries =
             data['countries'].map((country) => country).toList().cast<String>(),
         description = data['description'],
-        is_live = data['is_live'],
         name = data['name'],
-        security = data['security'],
         url = data['url'];
 
   double getBalance({String? country, String? service}) {
