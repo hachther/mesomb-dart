@@ -144,4 +144,10 @@ void main() {
     expect(transactions.previous, isNull);
     expect(transactions.results.length, greaterThan(0));
   });
+
+  test('testGetWalletTransactionsWithWallet', () async {
+    var client = WalletOperation(providerKey, accessKey, secretKey);
+    List<WalletTransaction> transactions = await client.getTransactions(['620757', '620756']);
+    expect(transactions.length, greaterThan(0));
+  });
 }

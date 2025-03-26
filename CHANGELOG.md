@@ -1,3 +1,8 @@
+## 2.0.1
+
+- Add airtime purchase operation
+- Fix bug on getTransactions
+
 ## 2.0.0
 
 - Integration of wallet system

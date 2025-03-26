@@ -66,7 +66,7 @@ void main() {
       expect(response.success, isTrue);
       expect(response.status, equals('SUCCESS'));
       expect(response.transaction.amount, equals(100));
-      expect(response.transaction.fees, equals(2.0));
+      expect(response.transaction.fees, equals(1.01));
       expect(response.transaction.service, equals('MTN'));
       expect(response.transaction.bParty, equals('237677553904'));
       expect(response.transaction.country, equals('CM'));

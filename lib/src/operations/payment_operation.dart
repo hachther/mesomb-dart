@@ -15,7 +15,7 @@ class PaymentOperation extends AOperation {
   /// You can specify the [language] of the operation if not 'en' will be value by default.
   PaymentOperation(super.applicationKey, super.accessKey, super.secretKey, {super.language});
 
-  /// Make a payment
+  /// Make a deposit
   ///
   /// Depose [amount] into [receiver] through the service [service].
   /// Your can specify the [country] and [currency] of the transaction if not CM and XAF will be value by default.
@@ -102,6 +102,54 @@ class PaymentOperation extends AOperation {
       'amount_currency': currency,
       'fees': fees,
       'conversion': conversion,
+      if (trxID != null) 'trxID': trxID,
+      if (location != null) 'location': location,
+      if (customer != null) 'customer': customer,
+      if (products != null) 'products': products,
+    };
+
+    return TransactionResponse(await executeRequest(
+        'POST', endpoint, DateTime.now(), nonce ?? RandomGenerator.nonce(), body, mode));
+  }
+
+  /// Purchase airtime
+  ///
+  /// Depose [merchant]'s [amount] airtime into [receiver] account through the service [service].
+  /// Your can specify the [country] and [currency] of the transaction if not CM and XAF will be value by default.
+  /// If your deal with a foreign currency you can set [conversion] to true.
+  /// Your can also set:
+  ///   - [location]: Map containing the location of the customer with the following attributes: town, region and location all string.
+  ///   - [products]: It is a List of products. Each product are Map with the following attributes: name string, category string, quantity int and amount float
+  ///   - [customer]: Map containing information about the customer: phone string, email: string, first_name string, last_name string, address string, town string, region string and country string
+  ///
+  /// You can set [mode] to asynchronous if you want to make an asynchronous transaction.
+  /// To prevent replay attack you can set a [nonce] to the transaction.
+  ///
+  /// The response will be a [TransactionResponse] object.
+  Future<TransactionResponse> purchaseAirtime({
+    required double amount,
+    required String service,
+    required String receiver,
+    required String merchant,
+    String? nonce,
+    String? trxID,
+    String? country = 'CM',
+    String? currency = 'XAF',
+    String? mode = 'synchronous',
+    Map<String, String>? location,
+    Map<String, String>? customer,
+    List<Map<String, dynamic>>? products
+  }) async {
+    String endpoint = 'payment/airtime/';
+
+    Map<String, dynamic> body = {
+      'amount': amount,
+      'service': service,
+      'receiver': receiver,
+      'merchant': merchant,
+      'country': country,
+      'currency': currency,
+      'amount_currency': currency,
       if (trxID != null) 'trxID': trxID,
       if (location != null) 'location': location,
       if (customer != null) 'customer': customer,

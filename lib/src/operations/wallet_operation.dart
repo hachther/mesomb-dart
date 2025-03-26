@@ -170,8 +170,8 @@ class WalletOperation extends AOperation {
 
   /// Get transactions from the [ids] list.
   /// You must set [source] to specified the origin of the IDs: MESOMB if the IDs are from MeSomb otherwise EXTERNAL.
-  Future<PaginatedTransactions> getTransactions(List<String> ids, [String source = 'MESOMB']) async {
-    String endpoint = "wallet/transactions/?${ids.map((e) => 'ids=$e').join('&')}&source=$source";
+  Future<List<WalletTransaction>> getTransactions(List<String> ids, [String source = 'MESOMB']) async {
+    String endpoint = "wallet/transactions/search/?${ids.map((e) => 'ids=$e').join('&')}&source=$source";
 
     return (await executeRequest(
         'GET', endpoint, DateTime.now(), RandomGenerator.nonce(), null, null))
