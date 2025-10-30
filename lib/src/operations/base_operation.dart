@@ -92,6 +92,8 @@ abstract class AOperation {
     String url = buildUrl(endpoint);
     var uri = Uri.parse(url);
     http.Response response;
+    final Duration timeout = Duration(milliseconds: MeSomb.timeout);
+
     if (method != 'GET') {
       var func = {
         'POST': http.post,
@@ -100,9 +102,9 @@ abstract class AOperation {
         'PATCH': http.patch,
         'DELETE': http.delete,
       }[method];
-      response = await func!(uri, headers: headers, body: jsonEncode(body));
+      response = await func!(uri, headers: headers, body: jsonEncode(body)).timeout(timeout);
     } else {
-      response = await http.get(uri, headers: headers);
+      response = await http.get(uri, headers: headers).timeout(timeout);
     }
 
     if (response.statusCode >= 400) {

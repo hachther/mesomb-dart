@@ -8,4 +8,6 @@ class MeSomb {
   static String version = '2.0.1';
 
   static String language = 'en';
+
+  static int timeout = 300000;
 }
