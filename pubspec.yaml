@@ -1,8 +1,9 @@
 name: mesomb
 description: Dart client to perform mobile payment transaction with MeSomb.
  you can integrate the module into your application for payments
-version: 2.0.1
+version: 2.0.2
 homepage: https://mesomb.com
+repository: https://github.com/mesomb/mesomb-dart
 
 environment:
  sdk: '>=2.19.0 <4.0.0'
